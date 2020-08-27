@@ -1,0 +1,46 @@
+with open(args.inputpatch, 'r') as infile:
+        file_data = json.load(infile)
+        for dicty in file_data:
+            for strg in dicty:
+                b = dicty.get("recipient_email", strg)
+                print('<><><><><><><><><><>',b)
+                b = dicty.get("recipient_email", dicty)
+                print('>>>>>>>>>>>>>>',b)
+                b = dicty['recipient_email']
+                print('<<<<<<<<<<<<<<<<', b)
+                b = strg['recipient_email']
+                print('<><><><><><><><><><>',b)
+                print('THIS IS  post',dicty.get('post_patching_emessage', dicty))
+                if strg == 'post_patching_emessage' and args.patchtype == 'postpatch':
+                    email_body = dicty['post_patching_emessage']
+                elif strg == 'pre_patching_emessage' and args.patchtype == 'prepatch':
+                    email_body = dicty['pre_patching_emessage']
+                else:
+                    print('populate json file with a dict. email_body entry')
+    return email_body, sender_email, sender_email
+    
+    [
+   {
+      "pre_patching_emessage": "{{ day }}, from 6:00pm - 6:00am."
+   },
+   {
+      "post_patching_emessage": "All,\r\n\r\nThe updates for {{ win_env }}.\r\n\r\n{{ hosts }}\""
+   },
+   {
+      "sender_email": "binglebongo-va@kfc.com"
+   },
+   {
+      "recipient_email": "binglebongo-va@ufc.com"
+   }
+]
+patching_email_body.json -pp prepatch
+<><><><><><><><><><> pre_patching_emessage
+>>>>>>>>>>>>>> {'pre_patching_emessage': '\r\n\r\nAll,\r\nWe will be deploying Windows updates to the below {{ win_env }} environment servers on {{ weekday }}, {{ month }} {{ day }}, from 6:00pm - 6:00am. \r\nPlease note that the servers may be rebooted 1 or more times while applying updates. If you find that any of the below servers should not be included in this server list, \r\nplease reply to {{ sender }} so we can have our records updated. Let us know if you have any questions or concerns.\r\nNote:  If anyone would like to be deleted from this monthly notification, please let me know so that I can remove your e-mail address.\r\n\r\n{{ hosts }}\r\n\r\n'}
+Traceback (most recent call last):
+  File "email_owner_for_patching.py", line 107, in <module>
+    main()
+  File "email_owner_for_patching.py", line 102, in main
+    email_body, sender_email, recipient_email = email_type(args)
+  File "email_owner_for_patching.py", line 63, in email_type
+    b = dicty['recipient_email']
+KeyError: 'recipient_email'
